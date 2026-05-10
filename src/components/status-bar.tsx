@@ -38,8 +38,8 @@ export function StatusBar() {
       <div style={{ height: 16, width: 1, background: "var(--border)" }} />
 
       <div style={{ color: "var(--muted)" }}>
-        DSN: <span style={{ fontFamily: "monospace", fontSize: 11 }}>
-          {process.env.NEXT_PUBLIC_CODMIR_DSN || "not set"}
+        Client Key: <span style={{ fontFamily: "monospace", fontSize: 11 }}>
+          {(process.env.NEXT_PUBLIC_CODMIR_CLIENT_KEY || "not set").slice(0, 12)}...
         </span>
       </div>
 
