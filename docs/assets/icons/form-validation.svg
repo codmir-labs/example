@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="form validation crash">
+<rect x="1" y="1" width="46" height="46" rx="12" fill="#22C55E" fill-opacity="0.12" stroke="#22C55E" stroke-opacity="0.4"/>
+<g transform="translate(12 12)" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" color="#22C55E">
+<rect x="4.5" y="3" width="15" height="18" rx="3"/><path d="M8.5 8h7M8.5 12h3"/><path d="M15.5 15.5v1.8M15.5 19.5h.01"/>
+</g>
+</svg>
