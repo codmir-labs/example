@@ -211,12 +211,6 @@ What the SDK does with them, in the browser, on 1.0.6 (the paths are inside `nod
 
 ### Production build
 
-> [!WARNING]
-> On a fresh install `npm run build` currently stops at the type check with
-> `Could not find a declaration file for module '@codmir/sdk/nextjs'`. `@codmir/sdk` 1.0.6 ships no `.d.ts` files and
-> `tsconfig.json` has `strict` on. `npm run dev` does not type-check, so it is not affected. A one-line workaround is
-> in [Troubleshooting](#troubleshooting).
-
 ```bash
 npm run build
 npm start
@@ -544,25 +538,6 @@ about a second after the last capture, preceded by an `OPTIONS` when the DSN is 
 </details>
 
 <details>
-<summary><b><code>npm run build</code> stops with "Could not find a declaration file for module"</b></summary>
-
-`next build` type-checks, and `@codmir/sdk` 1.0.6 has no type declarations: its `package.json` points `types` at
-`dist/*.d.ts` files that are not in the package. With `strict` on in `tsconfig.json`, TypeScript reports error TS7016
-for every file that imports `@codmir/sdk/nextjs`. `next dev` does not type-check, which is why `npm run dev` works.
-
-To build anyway, tell TypeScript to accept the module. Create `src/codmir-sdk.d.ts` with one line:
-
-```ts
-declare module "@codmir/sdk/nextjs";
-```
-
-Every import from the SDK is then typed `any`. With that file added, `npm run build` passed, and `npm start` answered
-`/` and `/dashboard` with 200, `/nonexistent-page` with 404, `/api/error` with 500 and `/api/slow` with 200 after
-3 seconds.
-
-</details>
-
-<details>
 <summary><b>The port is already in use</b></summary>
 
 A second `npm run dev` on port 3099 stops with `Error: listen EADDRINUSE: address already in use :::3099`.
@@ -621,6 +596,7 @@ That function is not in 1.0.6 or in 2.0.1, the latest on npm: both ship a replay
 | Path | What it holds |
 | --- | --- |
 | [`src/instrumentation-client.ts`](src/instrumentation-client.ts) | The SDK set-up: `Codmir.init({ ... })`, run once in the browser |
+| [`src/codmir-sdk.d.ts`](src/codmir-sdk.d.ts) | A one-line type declaration for `@codmir/sdk/nextjs`. The SDK release this example installs, 1.0.6, ships no type declarations, so without this file `next build` stops at the type check. Delete it when the example moves to a release that ships types: an ambient declaration shadows real types |
 | [`src/app/layout.tsx`](src/app/layout.tsx) | Root layout and the page title, `Codmir SDK Demo` |
 | [`src/app/page.tsx`](src/app/page.tsx) | The home page: header, status bar, the eight scenario cards, two links and the event log |
 | [`src/app/dashboard/page.tsx`](src/app/dashboard/page.tsx) | `/dashboard`: breadcrumbs, one info message on load, a click counter |
@@ -647,7 +623,7 @@ That function is not in 1.0.6 or in 2.0.1, the latest on npm: both ship a replay
 | Command | What it runs |
 | --- | --- |
 | `npm run dev` | `next dev -p 3099`, the development server |
-| `npm run build` | `next build`, a production build; on a fresh install it stops at the type check, see [Production build](#production-build) |
+| `npm run build` | `next build`, a production build |
 | `npm start` | `next start -p 3099`, serves the production build; run `npm run build` first |
 
 ## License
