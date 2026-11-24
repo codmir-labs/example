@@ -216,7 +216,7 @@ npm run build
 npm start
 ```
 
-Once a build passes, `npm start` is `next start -p 3099`, the same port as `npm run dev`. The `NEXT_PUBLIC_` values
+`npm start` runs `next start -p 3099`, the same port as `npm run dev`. The `NEXT_PUBLIC_` values
 are written into the browser bundle at build time, so rebuild after you change `.env.local`.
 
 ### Try the API routes
